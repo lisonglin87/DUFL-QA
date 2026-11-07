@@ -1,0 +1,10 @@
+# 直接 pip install -r requirements.txt
+fastapi>=0.110
+uvicorn[standard]>=0.27
+chromadb>=0.4.24
+openai>=1.30
+python-dotenv>=1.0
+jieba>=0.42
+
+# 可选：中文向量效果更好（EMBED_PROVIDER=st 时需要）
+# sentence-transformers>=2.7
