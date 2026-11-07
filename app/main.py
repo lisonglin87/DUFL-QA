@@ -7,7 +7,7 @@ import json
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
@@ -75,7 +75,19 @@ async def _stream_text(text: str, size: int = 18):
 # ------------------------- 路由 -------------------------
 @app.get("/")
 def home():
-    return FileResponse(config.BASE_DIR / "web" / "index.html")
+    """首页。文件被误删时给一句人话，而不是裸的 500。"""
+    page = config.BASE_DIR / "web" / "index.html"
+    if not page.exists():
+        return HTMLResponse(
+            "<meta charset='utf-8'><div style='font:15px/1.7 -apple-system,PingFang SC;"
+            "max-width:640px;margin:80px auto;padding:0 20px'>"
+            "<h3>页面文件缺失</h3>"
+            "<p><code>web/index.html</code> 不在了。在项目根目录执行：</p>"
+            "<pre style='background:#f5f7fa;padding:12px;border-radius:8px'>git checkout -- web</pre>"
+            "<p>恢复后刷新本页即可。</p></div>",
+            status_code=503,
+        )
+    return FileResponse(page)
 
 
 @app.get("/api/health")
