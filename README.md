@@ -156,7 +156,9 @@ python scripts/build_index.py --incremental     # 命令行
 
 ## 八、常见问题
 
-- **`Load failed` / 图片不显示**：别用 `file://` 双击打开页面，用 <http://127.0.0.1:8000>。前端已做兜底（`file://` 时自动指向本地接口、图片加载失败显示占位），但仍建议走服务地址。
+- **页面打不开（404）**：先 `curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:8000/`，不是 200 说明 `web/index.html` 不在了或服务没起。`git status` 能看到文件是否被误删，`git checkout -- web/index.html` 可恢复。
+- **改了页面但浏览器还是旧的**：浏览器会缓存，按 **⌘⇧R** 强制刷新。
+- **`Load failed` / 图片不显示**：别用 `file://` 双击打开页面，用 http://127.0.0.1:8000 。前端已做兜底（`file://` 时自动指向本地接口、图片失败显示占位），但仍建议走服务地址。
 - **报 401 / api key invalid**：key 少了 `sk-` 前缀最常见（正版 35 位）。用 `python scripts/set_key.py` 会自动补。
 - **报 404**：`DEEPSEEK_BASE_URL` 少了 `/v1`。
 - **`向量索引不可用，已降级为纯 BM25`**：模型没下载成功，功能仍可用。
