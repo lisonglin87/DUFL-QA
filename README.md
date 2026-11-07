@@ -50,6 +50,7 @@ DUFL-QA/
 │   ├── tidy_titles.py          整理抓取后的文件名（去掉面包屑标题、站点后缀）
 │   ├── clean_nav.py            洗掉正文里混入的站点导航 / 页脚
 │   ├── eval.py                 检索评测：36 条问题，算 Recall@1 / Recall@k / MRR
+│   ├── fix_paths.py            项目搬家后修 .venv 里写死的绝对路径
 │   └── set_key.py              安全写入 API key（读剪贴板、自动补 sk- 前缀）
 ├── storage/                    索引产物，可删，删了重建
 │   ├── chunks.json             所有片段（BM25 用）
@@ -163,6 +164,7 @@ python scripts/build_index.py --incremental     # 命令行
 - **报 404**：`DEEPSEEK_BASE_URL` 少了 `/v1`。
 - **`向量索引不可用，已降级为纯 BM25`**：模型没下载成功，功能仍可用。
 - **端口占用**：`lsof -i :8000`，或 `.env` 改 `PORT`。
+- **把项目文件夹移动/改名之后**：① `python scripts/fix_paths.py` 修 venv 里的绝对路径；② 重启服务（`Ctrl+C` 再 `bash start.sh`）；③ VS Code 重新打开新路径。数据不会丢，git 和历史都在文件夹里跟着走。
 
 ---
 
