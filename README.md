@@ -10,7 +10,7 @@
 ## 一、30 秒跑起来
 
 ```bash
-cd ~/Desktop/个人项目测试/DUFL-QA
+cd ~/Desktop/个人项目测试/校园智能问答助手/DUFL-QA
 bash start.sh          # 首次会自动建 .venv、装依赖、生成 .env
 ```
 
